@@ -1,10 +1,12 @@
 ﻿using Confluent.Kafka;
+using Kafka.Consumer.Console.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -49,6 +51,7 @@ namespace Kafka.Consumer.Console.Services
                     await Task.Run(() =>
                     {
                         var result = _consumer.Consume(stoppingToken);
+                        var book = JsonSerializer.Deserialize<BookDTO>(result.Message.Value);
                         _logger.LogInformation("GroupId: {GroupId}, Message: {Message}", _parameters.GroupId, result.Message.Value);
                     });
                 }
