@@ -1,4 +1,6 @@
 ﻿using Confluent.Kafka;
+using Kafka.Producer.API.Model;
+using System.Text.Json;
 
 namespace Kafka.Producer.API.Services
 {
@@ -25,7 +27,7 @@ namespace Kafka.Producer.API.Services
             };
         }
 
-        public async Task<string> SendMessage(string message)
+        public async Task<string> SendMessage(BookDTO book)
         {
             try
             {
@@ -35,6 +37,7 @@ namespace Kafka.Producer.API.Services
 
                 using (var producer = new ProducerBuilder<Null, string>(_producerConfig).Build())
                 {
+                    var message = JsonSerializer.Serialize(book);
                     var result = await producer.ProduceAsync(topic: topic, new() { Value = message });
                     _logger.LogInformation("Published");
 
