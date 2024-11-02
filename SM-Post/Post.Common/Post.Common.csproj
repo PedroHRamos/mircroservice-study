@@ -10,8 +10,4 @@
     <ProjectReference Include="..\..\CQRS-ES\CQRS.Core\CQRS.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
-
 </Project>
